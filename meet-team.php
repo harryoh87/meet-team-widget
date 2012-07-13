@@ -175,7 +175,7 @@ class Meet_Team_Widget extends WP_Widget {
 			$most_recent_post_date = date("M d, Y", strtotime($most_recent_post->post->post_date));
 
 			echo '<p>';
-			echo '<a href="#"><img src="wp-content/plugins/meet-team/chew.jpeg" style="border: 1px solid black; width: 60px; height: 68px; float: left;" /></a>';
+			echo '<a href="#"><img src="' . plugins_url('chew.jpeg', __FILE__) . '" style="border: 1px solid black; width: 60px; height: 68px; float: left;" /></a>';
 			echo '<a href="#" style="font-size: 10px">' . $user_to_display->display_name . '</a><span style="font-size: 9px"> ' . $user_city . ', ' . $user_state . '</span><br />';
 			echo '<span style="font-size: 9px">Last posted on ' . $most_recent_post_date . '</span>';
 			show_user_badges($user_to_display->ID);
