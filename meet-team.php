@@ -72,6 +72,28 @@ class Meet_Team_Widget extends WP_Widget {
 	}
 
 	/**
+	 *
+	 * @author Harry Oh
+	 *
+	 * @return boolean
+	 */
+	private function are_plugins_available()
+	{
+		if (is_plugin_active('communities-user-taxonomies/communities-user-taxonomies.php')
+				&& is_plugin_active('media-categories-2/media-categories.php')
+				&& is_plugin_active('user_meta_taxonomy/user_meta_taxonomy.php')
+				&& is_plugin_active('user-taxonomies/user-taxonomies.php')
+				&& is_plugin_active('user-titles/user-titles.php')) {
+	
+			$are_plugins_active = true;
+		} else {
+			$are_plugins_active = false;
+		}
+	
+		return $are_plugins_active;
+	}
+	
+	/**
 	 * Prints out experts in accordance to the conditions specified in this widget's admin. There are only 3 
 	 * possible conditions in which experts are displayed: 
 	 * 
