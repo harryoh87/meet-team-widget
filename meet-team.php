@@ -470,6 +470,7 @@ class Meet_Team_Widget extends WP_Widget {
 
 	<?php break;
 
+	// Random comment
 case 'textarea':
 
 	$rows = (isset($options['rows'])) ? $options['rows'] : '16';
