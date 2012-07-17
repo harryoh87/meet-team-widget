@@ -9,6 +9,8 @@ Version: 1.0
 Author: Harry Oh, Eddie Moya, Dan Crimmins
 */
 
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 /**
  * 
  *
@@ -54,6 +56,9 @@ class Meet_Team_Widget extends WP_Widget {
 		parent::WP_Widget($this->id_base, $this->widget_name, $widget_ops);
 	}
 
+	/**
+	 * 
+	 */
 	public function enqueue() {
 		wp_register_script('meet-team', plugins_url('meet-team/meet-team.js'), array('jquery'));
 		wp_enqueue_script('meet-team');
@@ -68,7 +73,9 @@ class Meet_Team_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function register_widget() {
-		add_action('widgets_init', create_function( '', 'register_widget("' . __CLASS__ . '");' ));
+		if (Meet_Team_Widget::are_plugins_available()) {
+			add_action('widgets_init', create_function( '', 'register_widget("' . __CLASS__ . '");' ));
+		}
 	}
 
 	/**
@@ -77,7 +84,7 @@ class Meet_Team_Widget extends WP_Widget {
 	 *
 	 * @return boolean
 	 */
-	private function are_plugins_available()
+	public static function are_plugins_available()
 	{
 		if (is_plugin_active('communities-user-taxonomies/communities-user-taxonomies.php')
 				&& is_plugin_active('media-categories-2/media-categories.php')
@@ -92,7 +99,7 @@ class Meet_Team_Widget extends WP_Widget {
 	
 		return $are_plugins_active;
 	}
-	
+
 	/**
 	 * Prints out experts in accordance to the conditions specified in this widget's admin. There are only 3 
 	 * possible conditions in which experts are displayed: 
