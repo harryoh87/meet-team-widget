@@ -135,7 +135,7 @@ class Meet_Team_Widget extends WP_Widget {
 			$all_categories = get_terms('category');
 			$total_categories = count($all_categories);
 			$users_to_display = array();
-			
+
 			// Randomly select users from ALL categories. Random selection algorithm used: 
 			// Step 1: Select a random category from $all_categories
 			// Step 2: Add all of the users from that category (that have not already been added) onto $users_to_display
@@ -164,13 +164,15 @@ class Meet_Team_Widget extends WP_Widget {
 			}
 
 		}
-
+        $users = array();
 		// Print out the users that were retrieved based from one of the three conditions accounted for by the above 
 		// if/elseif/elseif statement. 
 		foreach ($users_to_display as $user_to_display) {
 			$user_meta = get_user_meta($user_to_display->ID);
-			$user_city = $user_meta['user_city'][0] ? $user_meta['user_city'][0] : 'Hoffman Estates';
-			$user_state = $user_meta['user_state'][0] ? $user_meta['user_state'][0] : 'IL';
+		
+			$user_to_display->meta = $user_meta;
+			$user_to_display->user_city = $user_meta['user_city'][0] ? $user_meta['user_city'][0] : 'Hoffman Estates';
+			$user_to_display->user_state = $user_meta['user_state'][0] ? $user_meta['user_state'][0] : 'IL';
 			$most_recent_post = new WP_Query(
 					array(
 							'author' => $user_to_display->ID,
@@ -179,15 +181,20 @@ class Meet_Team_Widget extends WP_Widget {
 							'ignore_sticky_posts' => 1
 					)
 			);
-			$most_recent_post_date = date("M d, Y", strtotime($most_recent_post->post->post_date));
-
-			echo '<p>';
-			echo '<a href="#"><img src="' . plugins_url('chew.jpeg', __FILE__) . '" style="border: 1px solid black; width: 60px; height: 68px; float: left;" /></a>';
-			echo '<a href="#" style="font-size: 10px">' . $user_to_display->display_name . '</a><span style="font-size: 9px"> ' . $user_city . ', ' . $user_state . '</span><br />';
-			echo '<span style="font-size: 9px">Last posted on ' . $most_recent_post_date . '</span>';
-			show_user_badges($user_to_display->ID);
-			echo '</p>';
-		}
+			//print_pre($most_recent_post);
+			$user_to_display->most_recent_post_date = date("M d, Y", strtotime($most_recent_post->post->post_date));
+            $users[] = $user_to_display;
+        } 
+        //print_pre($users);
+        include 'views/users.php';
+            // echo '<p>';
+            // echo '<a href="#"><img src="' . plugins_url('chew.jpeg', __FILE__) . '" style="border: 1px solid black; width: 60px; height: 68px; float: left;" /></a>';
+            // echo '<a href="#" style="font-size: 10px">' . $user_to_display->display_name . '</a><span style="font-size: 9px"> ' . $user_city . ', ' . $user_state . '</span><br />';
+            // echo '<span style="font-size: 9px">Last posted on ' . $most_recent_post_date . '</span>';
+            // show_user_badges($user_to_display->ID);
+            // echo '</p>';
+       
+		
 	}
 	
 	/**
@@ -516,5 +523,9 @@ case 'radio' :
 <?php
 	}
 }
-
+function print_pre($r){
+    echo "<pre>";
+    print_r($r);
+    echo "</pre>";
+}
 Meet_Team_Widget::register_widget();
