@@ -1,4 +1,4 @@
-<section class="<?php echo $instance['span'] === 'span4' ? 'span4' : 'span8'; ?>">
+<section class="span4">
     <div class="member clearfix">
         <div class="badge">
             <img src="<?php echo $user->badge_image_url; ?>" alt="Team Player" title="Team Player" />

@@ -170,14 +170,14 @@ class Meet_Team_Widget extends WP_Widget {
 		// Print out the users that were retrieved based from one of the three conditions accounted for by the above 
 		// if/elseif/elseif statement - after retrieving values required for front-end
 		foreach ($users as $user) {
-			$user_meta = get_user_meta($user->ID);
+            $user_meta = get_user_meta($user->ID);
             $user_badge = get_user_badges($user->ID)[0]; // For now, we can only have one badge
 
-			$user->meta = $user_meta; // We still need this meta info for flexibility
-			$user->user_city = $user_meta['user_city'][0] ? $user_meta['user_city'][0] : 'Hoffman Estates';
-			$user->user_state = $user_meta['user_state'][0] ? $user_meta['user_state'][0] : 'IL';
+            $user->meta = $user_meta; // We still need this meta info for flexibility
+            $user->user_city = $user_meta['user_city'][0] ? $user_meta['user_city'][0] : 'Hoffman Estates';
+            $user->user_state = $user_meta['user_state'][0] ? $user_meta['user_state'][0] : 'IL';
             $user->total_posts = count_user_posts($user->ID);
-            $user->total_comments = count(get_comments(array('user_id' => $user->ID)));            // 
+            $user->total_comments = count(get_comments(array('user_id' => $user->ID)));
             $user->badge_name = $user_badge->name;
             $user->badge_image_url = $user_badge->image;
 
@@ -281,8 +281,7 @@ class Meet_Team_Widget extends WP_Widget {
 				'number_of_experts' => '3',
 				'category-1' => 'all',
 				'category-2' => 'all',
-				'category-3' => 'all',
-				'span' => 'span4'
+				'category-3' => 'all'
 		);
 
 		$instance = wp_parse_args((array) $instance, $defaults);
@@ -303,17 +302,6 @@ class Meet_Team_Widget extends WP_Widget {
 						'type' => 'text',
 						'label' => 'Widget Subtitle'
 				),
-
-                // Span4 or Span8 option
-                array(
-                        'field_id' => 'span',
-                        'type' => 'select-slim',
-                        'label' => 'Displayed as span4 or span8:',
-                        'options' => array(
-                                'span4' => '4',
-                                'span8' => '8'
-                        )
-                ),
 
 				// Select number of experts
 				array(
@@ -349,12 +337,8 @@ class Meet_Team_Widget extends WP_Widget {
 				)
 		);
 
-
-	    //form_field($field_id, $type, $label, $instance, $options = array())
-
         // Display ALL of the above widget options form field
 		$this->form_fields($fields, $instance);
-        //$this->form_field('span', 'radio', array('Span4', 'Span8'), $instance, array('span4', 'span8'));
 
         // User selection drop-down menus - two drop-down menus per user, one for selecting category and 
         // the other for selecting the user's username (nicename)
@@ -472,7 +456,7 @@ class Meet_Team_Widget extends WP_Widget {
     	            <?php break;
 
 
-                case 'select': ?>
+                    case 'select': ?>
     	            <select onchange="bananas(this)" id="<?php echo $this->get_field_id( $field_id ); ?>"
                             class="widefat meet-team-instant-change" name="<?php echo $this->get_field_name($field_id); ?>">
     		                <?php foreach ( $options as $value => $label ): ?>
@@ -485,17 +469,17 @@ class Meet_Team_Widget extends WP_Widget {
     	            <?php break;
 
 
-				case 'select-slim': ?>
-    	            <label for="<?php echo $this->get_field_id( $field_id ); ?>"><?php echo $label; ?></label>
-    	            <select onchange="bananas(this)" class="meet-team-instant-change" id="<?php echo $this->get_field_id( $field_id ); ?>"
-                                    name="<?php echo $this->get_field_name($field_id); ?>">
-        		        <?php foreach ( $options as $value => $display ): ?>
-        		            <option value="<?php echo $value; ?>"
-                                <?php selected($value, $instance[$field_id]) ?>>
-                                <?php echo $display ?>
-                            </option>
-        		        <?php endforeach; ?>
-    	            </select>
+                    case 'select-slim': ?>
+    	                <label for="<?php echo $this->get_field_id( $field_id ); ?>"><?php echo $label; ?></label>
+        	            <select onchange="bananas(this)" class="meet-team-instant-change" id="<?php echo $this->get_field_id( $field_id ); ?>"
+                                name="<?php echo $this->get_field_name($field_id); ?>">
+            		        <?php foreach ( $options as $value => $display ): ?>
+            		            <option value="<?php echo $value; ?>"
+                                    <?php selected($value, $instance[$field_id]) ?>>
+                                    <?php echo $display ?>
+                                </option>
+            		        <?php endforeach; ?>
+                        </select>
                     <?php break;
 
 
