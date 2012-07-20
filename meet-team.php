@@ -171,7 +171,8 @@ class Meet_Team_Widget extends WP_Widget {
 		// if/elseif/elseif statement - after retrieving values required for front-end
 		foreach ($users as $user) {
             $user_meta = get_user_meta($user->ID);
-            $user_badge = get_user_badges($user->ID)[0]; // For now, we can only have one badge
+            $user_badge = get_user_badges($user->ID);
+            $user_badge = $user_badge[0]; // For now, we can only have one badge
 
             $user->meta = $user_meta; // We still need this meta info for flexibility
             $user->user_city = $user_meta['user_city'][0] ? $user_meta['user_city'][0] : 'Hoffman Estates';
