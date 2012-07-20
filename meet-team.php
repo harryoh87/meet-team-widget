@@ -12,7 +12,7 @@ Author: Harry Oh, Eddie Moya, Dan Crimmins
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 /**
- * 
+ * A widget that creates a customizable list of users. 
  *
  * @author Harry Oh, Eddie Moya, Dan Crimmins
  * @version 1.0
