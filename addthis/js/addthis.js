@@ -8,12 +8,6 @@ var addthis_config = {
     }
 };
 
-// Include optional parameters to Shop Your Way sharing functionality 
-var addthis_share = {
-
-
-};
-
 $(function() {
     var delay = 200;
 
