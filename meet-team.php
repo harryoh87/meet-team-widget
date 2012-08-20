@@ -88,11 +88,12 @@ class Meet_Team_Widget extends WP_Widget {
 	 */
 	public static function are_plugins_available()
 	{
-		if (is_plugin_active('communities-user-taxonomies/communities-user-taxonomies.php')
-				&& is_plugin_active('media-categories-2/media-categories.php')
-				&& is_plugin_active('user_meta_taxonomy/user_meta_taxonomy.php')
-				&& is_plugin_active('user-taxonomies/user-taxonomies.php')
-				&& is_plugin_active('user-titles/user-titles.php')) {
+		if (
+				//is_plugin_active('communities-user-taxonomies/communities-user-taxonomies.php')
+				//&& is_plugin_active('media-categories-2/media-categories.php')
+				//&& is_plugin_active('user_meta_taxonomy/user_meta_taxonomy.php')
+				//&& is_plugin_active('user-taxonomies/user-taxonomies.php')
+				 is_plugin_active('user-titles/user-titles.php')) {
 
 			$are_plugins_active = true;
 		} else {
@@ -357,16 +358,18 @@ class Meet_Team_Widget extends WP_Widget {
 
             // Create the exact number of drop-down menus specified in number_of_experts
 			for ($i = 1; $i <= $instance['number_of_experts']; $i += 1) {
-				if ($instance['category-' . $i] == 'all') {
-					$user_list = get_users_by_taxonomy('category', $category_term_ids);
-				} else {
-					$user_list = get_users_by_taxonomy('category', array($instance['category-' . $i]));
-				}
+				if(function_exists('get_users_by_taxonomy')){
+					if ($instance['category-' . $i] == 'all') {
+						$user_list = get_users_by_taxonomy('category', $category_term_ids);
+					} else {
+						$user_list = get_users_by_taxonomy('category', array($instance['category-' . $i]));
+					}
 
-				$categories = array('all' => 'All Categories') + $categories;
-				$this->form_field('category-' . $i, 'select', 'Expert #' . $i, $instance, $categories);
-				$this->user_list_form_field($user_list, $instance, $i); // custom form field generating function
-			}
+					$categories = array('all' => 'All Categories') + $categories;
+					$this->form_field('category-' . $i, 'select', 'Expert #' . $i, $instance, $categories);
+					$this->user_list_form_field($user_list, $instance, $i); // custom form field generating function
+				}
+		}
 		}
 	}
 
