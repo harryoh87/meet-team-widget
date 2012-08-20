@@ -1,4 +1,4 @@
-<section class="span4">
+<section class="span12">
     <div class="member clearfix">
         <div class="badge">
             <img src="<?php echo $user->badge_image_url; ?>" alt="Team Player" title="Team Player" />
